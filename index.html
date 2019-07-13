@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="./styles/skeleton.css">
     <link rel="stylesheet" href="./styles/normalize.css">
     <link rel="stylesheet" href="./styles/style.css">
-    <script src="./scripts/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./scripts/jquery.fittext.js"></script>
 </head>
 
 <body>
@@ -22,22 +22,21 @@
             <div id="game_content">
                 <div id="game_start">
                     <div id="top_start">
-                        <h1>NumbersGame</h1>
+                        <h1>Numbers Game</h1>
                     </div>
                     <div id="middle_start">
                         <h5>Choose difficuly...</h5>
                     </div>
                     <div id="bottom_start">
-                        <input type="button" class="button-primary" value="Easy">
-                        <input type="button" class="button-primary" value="Medium">
-                        <input type="button" class="button-primary" value="Hard">
+                        <input id="easy_mode" type="button" class="button-primary" value="Easy">
+                        <input id="medium_mode" type="button" class="button-primary" value="Medium">
+                        <input id="hard_mode" type="button" class="button-primary" value="Hard">
                     </div>
-
                 </div>
                 <div id="gameplay">
                     <div id="answer">
                         <input id="answer_input" type="text">
-                        <input type="button" class="button-primary" value="Submit">
+                        <input id="answer_button" type="button" class="button-primary" value="Submit">
                     </div>
                     <div id="middle_row">
                         <div id="first_num">
@@ -59,10 +58,23 @@
                         </div>
                     </div>
                 </div>
+                <div id="game_result">
+                    <div id="top_result">
+                        <h1 id="top_result_text">222</h1>
+                    </div>
+                    <div id="middle_result">
+                        <h5 id="middle_result_text">You did ok</h5>
+                    </div>
+                    <div id="bottom_result">
+                        <input id="retry_button" type="button" class="button-primary" value="Retry">
+                    </div>
+                </div>
             </div>
 
         </div>
     </div>
+
+    <script src="./scripts/script.js"></script>
 </body>
 
 </html>

@@ -21,19 +21,42 @@
 
 /* Game Start Screen */
 #game_start {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
 
 }
 
 #top_start {
+    width: 100%;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
 
 }
 
 #middle_start {
-
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+    text-align: center;
+    flex-grow: 2;
 }
 
 #bottom_start {
-    
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-grow: 2;
 }
 
 /* Gameplay Screen */
@@ -62,7 +85,7 @@
 
 #answer_input {
     width: 70%;
-    /* font-size: 10vw; */
+    font-size: 10vh;
     text-align: center;
 }
 
@@ -73,22 +96,29 @@
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    flex-grow: 2;
-    /* font-size: 25.5vw; */
 }
 
 #first_num {
-    /* flex-grow: 2; */
+    width: 40%;
+    text-align: center;
+    font-size: 10vw;
+    background-color: #ffffff61;
+    border-radius: 70px;
 }
 
 #math_type {
-    /* flex-grow: 1; */
-    /* font-size: 20vw; */
+    width: 18%;
+    font-size: 4vw;
+    text-align: center;
+
 }
 
 #second_num {
-    /* flex-grow: 2; */
-}
+    width: 40%;
+    text-align: center;
+    font-size: 10vw;
+    background-color: #ffffff61;
+    border-radius: 70px;}
 
 #game_visuals {
     flex-grow: 2;
@@ -100,11 +130,53 @@
     height: 0;
 }
 
-#mario > img {
-    position: relative;
-    height: 4vw;
+#mario {
+    position: absolute;
+    display: flex;
 }
 
-#goomba > img {
-    height: 2vw;
+#goomba {
+    position: absolute;
+    display: flex;
+}
+
+/* Game Result Screen */
+
+#game_result {
+    height: 100%;
+    width: 100%;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+#top_result {
+    width: 100%;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+#middle_result {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+    text-align: center;
+    flex-grow: 2;
+}
+
+#bottom_result {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-grow: 2;
 }
