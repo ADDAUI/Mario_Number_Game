@@ -1,0 +1,110 @@
+#game_screen {
+    width: 100%;
+    padding-top: calc(3/4 * 100%);
+    background: white;
+    position: relative;
+    overflow: hidden;
+}
+
+#game_content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;  
+    border-radius: 15px;
+    background-color: aquamarine;
+    background-image: url("../images/bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;  
+}
+
+/* Game Start Screen */
+#game_start {
+
+}
+
+#top_start {
+
+}
+
+#middle_start {
+
+}
+
+#bottom_start {
+    
+}
+
+/* Gameplay Screen */
+#gameplay {
+    height: 100%;
+    width: 100%;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+#answer {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    flex-grow: 2;
+}
+#answer > * {
+    height: 80%;
+}
+
+#answer_input {
+    width: 70%;
+    /* font-size: 10vw; */
+    text-align: center;
+}
+
+#middle_row {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    flex-grow: 2;
+    /* font-size: 25.5vw; */
+}
+
+#first_num {
+    /* flex-grow: 2; */
+}
+
+#math_type {
+    /* flex-grow: 1; */
+    /* font-size: 20vw; */
+}
+
+#second_num {
+    /* flex-grow: 2; */
+}
+
+#game_visuals {
+    flex-grow: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: left;
+    height: 0;
+}
+
+#mario > img {
+    position: relative;
+    height: 4vw;
+}
+
+#goomba > img {
+    height: 2vw;
+}
