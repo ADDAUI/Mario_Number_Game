@@ -1,10 +1,13 @@
 let mario_size = 5.86;
 let goomba_size = 3.9;
 let ground_height = 7;
+let numberOfQuestions = 16;
+let dev_state = true;
 
 //global vars
 var lives = 0;
 var move_goomba_interval = null;
+var progress = 0;
 
 $("#easy_mode").click(function (e) {
     e.preventDefault();
@@ -31,17 +34,35 @@ $("#answer_button").click(function (e) {
     checkResult();
 });
 
-$('#answer_input').keypress(function (e) {
+$('#answer_input').keydown(function (e) {
     var key = e.which;
+    console.log(key);
     if (key == 13) {
         e.preventDefault();
         checkResult();
+    }else if(key == 38){
+        e.preventDefault();
+        $('#answer_input').val(parseInt($('#answer_input').val()) + 1);
+    }else if(key == 40){
+        
+        e.preventDefault();
+        $('#answer_input').val(parseInt($('#answer_input').val()) - 1);
     }
 });
 
+function resetGame(){
+    lives = 3;
+    progress = 0;
+    updateLabels();
+    $("#mario").css("display", "flex");
+    alignCharacters();
+    $("#goomba").css("left", "0%");
+    $("#mario").css("left", "10%");
+}
+
 function start_game(mode) {
     var time = null;
-    lives = 3;
+    resetGame();
     switch (mode) {
         case "easy": time = 1000;
             break;
@@ -58,10 +79,6 @@ function start_game(mode) {
 
     console.log("The Difficulty is " + mode + " and the time is " + time);
 
-
-    alignCharacters();
-    $("#goomba").css("left", "0%");
-    $("#mario").css("left", "10%");
     choose_stage(2);
     generateQuestion();
     $("#answer_input").focus();
@@ -95,13 +112,20 @@ function move_goomba() {
     //TODO Make a better collision detection algorithm.
     var left_per = move_character("goomba", 1.0);
     if (left_per > getLeftPercentage("mario")) {
-        gameover();
+        gameover(false);
     }
 }
 
 function generateQuestion() {
     $("#first_num_label").text(Math.floor((Math.random() * 10) + 1));
     $("#second_num_label").text(Math.floor((Math.random() * 10) + 1));
+    
+    //DEV: THIS STATEMENT USED TO ADD THE ANSWER TO MAKE TESTING EASIER
+    if(dev_state){
+        var firstNum = parseInt($("#first_num_label").text());
+        var secondNum = parseInt($("#second_num_label").text());
+    $("#answer_input").val((firstNum * secondNum));
+    }
 }
 
 function checkResult() {
@@ -121,22 +145,51 @@ function checkResult() {
     $("#answer_input").focus();
 }
 
+function updateLabels(){
+    $("#percentage_progress").text(progress + "%");
+    $("#lives_progress").text("♥: "+lives);      
+}
+
 function correct_answer() {
     generateQuestion();
-    var left_per = move_character("mario", 5.0);
+    var left_per = move_character("mario", (82/numberOfQuestions+1));
+    if(left_per > 92){
+        $("#mario").css("left", "92%");
+        progress = 100;
+        updateLabels();
+        $.when($("#mario").fadeOut()).done(function(){
+            gameover(true);
+        });
+    }else{
+        progress = Math.floor((getLeftPercentage("mario") - 10) * (100/82));
+        updateLabels();
+    }
 }
 function wrong_answer() {
     lives--;
     if (lives < 1) {
-        gameover();
+        gameover(false);
     } else {
-        console.log(lives + " lives left");
+        updateLabels();
         generateQuestion();
     }
 }
 
-function gameover() {
+function gameover(won) {
     clearInterval(move_goomba_interval);
+    if(won){
+        $("#top_result_text").text( progress + "%");
+        $("#middle_result_text").text("Good job");
+    }else{
+        $("#top_result_text").text( progress + "%");
+        if(progress <= 30){
+            $("#middle_result_text").text("Try Again");
+        }else if (progress > 30 && progress <= 70){
+            $("#middle_result_text").text("You need to work harder");
+        }else if (progress > 70){
+            $("#middle_result_text").text("You almost finished");
+        }
+    }
     choose_stage(3);
     console.log("GaMeOvEr");
 }
