@@ -2,12 +2,38 @@ let mario_size = 5.86;
 let goomba_size = 3.9;
 let ground_height = 7;
 let numberOfQuestions = 16;
-let dev_state = true;
+let dev_state = false;
+
+//init sound
+ion.sound({
+    sounds: [
+        {
+            name: "mario",
+            loop: true
+        },
+        { name: "correct" },
+        { name: "wrong" },
+        { name: "gameover" },
+        { name: "win" }
+    ],
+
+    // main config
+    path: "../audio/",
+    preload: true,
+    multiplay: true,
+    volume: 0.3
+});
 
 //global vars
 var lives = 0;
 var move_goomba_interval = null;
 var progress = 0;
+
+
+new ResizeSensor(jQuery('#game_screen'), function () {
+    alignCharacters();
+
+});
 
 $("#easy_mode").click(function (e) {
     e.preventDefault();
@@ -40,20 +66,22 @@ $('#answer_input').keydown(function (e) {
     if (key == 13) {
         e.preventDefault();
         checkResult();
-    }else if(key == 38){
+    } else if (key == 38) {
         e.preventDefault();
-        $('#answer_input').val(parseInt($('#answer_input').val()) + 1);
-    }else if(key == 40){
-        
+        var value = parseInt($('#answer_input').val(), 10) || 0;
+        $('#answer_input').val(value + 1);
+    } else if (key == 40) {
         e.preventDefault();
-        $('#answer_input').val(parseInt($('#answer_input').val()) - 1);
+        var value = parseInt($('#answer_input').val(), 10) || 0;
+        $('#answer_input').val(value - 1);
     }
 });
 
-function resetGame(){
+function resetGame() {
     lives = 3;
     progress = 0;
     updateLabels();
+    $("#answer_input").val('');
     $("#mario").css("display", "flex");
     alignCharacters();
     $("#goomba").css("left", "0%");
@@ -80,6 +108,7 @@ function start_game(mode) {
     console.log("The Difficulty is " + mode + " and the time is " + time);
 
     choose_stage(2);
+    ion.sound.play("mario");
     generateQuestion();
     $("#answer_input").focus();
     move_goomba_interval = setInterval(move_goomba, time);
@@ -119,12 +148,12 @@ function move_goomba() {
 function generateQuestion() {
     $("#first_num_label").text(Math.floor((Math.random() * 10) + 1));
     $("#second_num_label").text(Math.floor((Math.random() * 10) + 1));
-    
+
     //DEV: THIS STATEMENT USED TO ADD THE ANSWER TO MAKE TESTING EASIER
-    if(dev_state){
+    if (dev_state) {
         var firstNum = parseInt($("#first_num_label").text());
         var secondNum = parseInt($("#second_num_label").text());
-    $("#answer_input").val((firstNum * secondNum));
+        $("#answer_input").val((firstNum * secondNum));
     }
 }
 
@@ -138,30 +167,36 @@ function checkResult() {
     var answer = parseInt($("#answer_input").val());
     $("#answer_input").val('');
     if ((firstNum * secondNum) === answer) {
+        ion.sound.play("correct");
+        $("#answer_input").css("background-color", "#89f338");
+        setTimeout(function () { $("#answer_input").css("background-color", "#fff"); }, 200);
         correct_answer();
     } else {
+        ion.sound.play("wrong");
+        $("#answer_input").css("background-color", "#f33838");
+        setTimeout(function () { $("#answer_input").css("background-color", "#fff"); }, 200);
         wrong_answer();
     }
     $("#answer_input").focus();
 }
 
-function updateLabels(){
+function updateLabels() {
     $("#percentage_progress").text(progress + "%");
-    $("#lives_progress").text("♥: "+lives);      
+    $("#lives_progress").text("♥: " + lives);
 }
 
 function correct_answer() {
-    generateQuestion();
-    var left_per = move_character("mario", (82/numberOfQuestions+1));
-    if(left_per > 92){
+    var left_per = move_character("mario", (82 / numberOfQuestions + 1));
+    if (left_per > 92) {
         $("#mario").css("left", "92%");
         progress = 100;
         updateLabels();
-        $.when($("#mario").fadeOut()).done(function(){
+        $.when($("#mario").fadeOut()).done(function () {
             gameover(true);
         });
-    }else{
-        progress = Math.floor((getLeftPercentage("mario") - 10) * (100/82));
+    } else {
+        progress = Math.floor((getLeftPercentage("mario") - 10) * (100 / 82));
+        generateQuestion();
         updateLabels();
     }
 }
@@ -177,17 +212,20 @@ function wrong_answer() {
 
 function gameover(won) {
     clearInterval(move_goomba_interval);
-    if(won){
-        $("#top_result_text").text( progress + "%");
-        $("#middle_result_text").text("Good job");
-    }else{
-        $("#top_result_text").text( progress + "%");
-        if(progress <= 30){
-            $("#middle_result_text").text("Try Again");
-        }else if (progress > 30 && progress <= 70){
-            $("#middle_result_text").text("You need to work harder");
-        }else if (progress > 70){
-            $("#middle_result_text").text("You almost finished");
+    ion.sound.stop("mario");
+    if (won) {
+        ion.sound.play("win");
+        $("#top_result_text").text(progress + "%");
+        $("#middle_result_text").text("أحسنت");
+    } else {
+        ion.sound.play("gameover");
+        $("#top_result_text").text(progress + "%");
+        if (progress <= 30) {
+            $("#middle_result_text").text("حاول مجدداً");
+        } else if (progress > 30 && progress <= 70) {
+            $("#middle_result_text").text("عليك العمل بجد أكثر");
+        } else if (progress > 70) {
+            $("#middle_result_text").text("لقد قاربت على النجاح");
         }
     }
     choose_stage(3);

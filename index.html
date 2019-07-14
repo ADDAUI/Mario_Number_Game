@@ -4,84 +4,87 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>NumbersGame</title>
+    <title>سباق الحساب</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet"
         href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
-    <link rel="stylesheet" href="./styles/skeleton.css">
-    <link rel="stylesheet" href="./styles/normalize.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="./scripts/jquery.fittext.js"></script>
+    <script src="./scripts/ion.sound.min.js"></script>
 </head>
 
 <body>
-    <div class="container">
-        <div id="game_screen">
-            <div id="game_content">
-                <div id="game_start">
-                    <div id="top_start">
-                        <h1>Numbers Game</h1>
+    <div class="wrapper">
+        <div class="inner">
+            <div id="game_screen">
+                <div id="game_content">
+                    <div id="game_start">
+                        <div id="top_start">
+                            <h1>سباق الحساب</h1>
+                        </div>
+                        <div id="middle_start">
+                            <h5>ساعد ماريو على الوصول الى القلعة قبل ان يصل اليه الجومبا الشرير</h5>
+                            <p>حل المسائل الرياضية باسرع وقت ممكن</p>
+                            <p>اختر مستوى الصعوبة</p>
+                        </div>
+                        <div id="bottom_start">
+                            <button id="easy_mode" class="buttonMario menu_buttons">سهل</button>
+                            <button id="medium_mode" class="buttonMario menu_buttons">متوسط</button>
+                            <button id="hard_mode" class="buttonMario menu_buttons">صعب</button>
+                        </div>
                     </div>
-                    <div id="middle_start">
-                        <h5>Choose difficuly...</h5>
-                    </div>
-                    <div id="bottom_start">
-                        <input id="easy_mode" type="button" class="button-primary" value="Easy">
-                        <input id="medium_mode" type="button" class="button-primary" value="Medium">
-                        <input id="hard_mode" type="button" class="button-primary" value="Hard">
-                    </div>
-                </div>
-                <div id="gameplay">
-                    <div id="answer">
-                        <div id="progress_bar">
-                            <div id="lives_progress">
-                                <label>♥: 3</label>
+                    <div id="gameplay">
+                        <div id="answer">
+                            <div id="progress_bar">
+                                <div id="lives_progress">
+                                    <label>♥: 3</label>
+                                </div>
+                                <div id="percentage_progress">
+                                    <label>0%</label>
+                                </div>
                             </div>
-                            <div id="percentage_progress">
-                                <label>0%</label>
+                            <input id="answer_input" class="inputMario" type="number">
+                            <button id="answer_button" class="buttonMario menu_buttons">تحقق</button>
+                        </div>
+                        <div id="middle_row">
+                            <div id="first_num">
+                                <label id="first_num_label">0</label>
+                            </div>
+                            <div id="math_type">
+                                &chi;
+                            </div>
+                            <div id="second_num">
+                                <label id="second_num_label">0</label>
                             </div>
                         </div>
-                        <input id="answer_input" type="text">
-                        <input id="answer_button" type="button" class="button-primary" value="Submit">
-                    </div>
-                    <div id="middle_row">
-                        <div id="first_num">
-                            <label id="first_num_label">0</label>
-                        </div>
-                        <div id="math_type">
-                            &chi;
-                        </div>
-                        <div id="second_num">
-                            <label id="second_num_label">0</label>
+                        <div id="game_visuals">
+                            <div id="mario">
+                                <img src="./images/mario.png" alt="mario">
+                            </div>
+                            <div id="goomba">
+                                <img src="./images/goomba.png" alt="goomba">
+                            </div>
                         </div>
                     </div>
-                    <div id="game_visuals">
-                        <div id="mario">
-                            <img src="./images/mario.png" alt="mario">
+                    <div id="game_result">
+                        <div id="top_result">
+                            <h1 id="top_result_text">0</h1>
                         </div>
-                        <div id="goomba">
-                            <img src="./images/goomba.png" alt="goomba">
+                        <div id="middle_result">
+                            <h5 id="middle_result_text"></h5>
                         </div>
-                    </div>
-                </div>
-                <div id="game_result">
-                    <div id="top_result">
-                        <h1 id="top_result_text">222</h1>
-                    </div>
-                    <div id="middle_result">
-                        <h5 id="middle_result_text">You did ok</h5>
-                    </div>
-                    <div id="bottom_result">
-                        <input id="retry_button" type="button" class="button-primary" value="Retry">
+                        <div id="bottom_result">
+                            <button id="retry_button" class="buttonMario menu_buttons">محاولة أخرى</button>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
+    <script src="./scripts/ResizeSensor.js"></script>
     <script src="./scripts/script.js"></script>
 </body>
 
